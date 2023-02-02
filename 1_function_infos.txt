@@ -1,0 +1,59 @@
+FLIGHT INSTANCE
+
+-> Add Schedule Butonu
+	1.1-) Flight number boşsa critical döndür
+	1.2-) Flight number'a ait bir flight yoksa critical döndür
+	2-) Yeni bir pencere aç
+		2.1-) Pencereyi tasarla	
+
+
+-> Get Schedule Butonu
+
+
+
+FLIGHT NUMBER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------- aşağısı tamamlandı -----------------------------
+
+
+add_flight (
+	-> yeni pencere
+		- flight number
+		- departure airport
+		- arrival airport
+		- duration (min)
+			-> bilgiler kontrol edildi
+			-> girilen tüm bilgiler df_flight dataframe'i içerisinde yeni bir kolon olarak kaydedildi
+			-> df_flight veri tabanına işlendi
+			-> Qt tablosunun row sayısı güncellendi (1 arttırıldı)
+			-> Qt tablosundaki her column df_flight tablosundaki karşılığına göre atandı
+
+cancel_flight
+	-> yemi pencere
+		- silinecek uçuşun numarası istenir ve onay tuşu yer alır
+		-> onay tuşu
+			- veritabanı df_flight olarak df haline çekilir
+			- giriş yapılan numara df_flight içerisindeki numaraların arasında var mı kontrol edilir
+				~ yoksa: hata penceresi
+				~ varsa: o veriye ait raw pop edilir
+					   yeni veri tabanı mysql içine döndürülür (kaydedilir)
+					   
+					   kullanıcıya başarı penceresi döndürülür
+
+
+
+		
+		

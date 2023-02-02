@@ -1,0 +1,6 @@
+Flight Number	Date	Departure
+16	12 January	03:35
+22	12 January	13:45
+16	12 January	00:30
+16	03 January	15:15
+16	04 January	22:00

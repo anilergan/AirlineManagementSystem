@@ -1,0 +1,72 @@
+when you clicked update flight instance button
+
+# 1. Flight is today
+
+if (weekly_schedule == today | custom_schedule == today.date) & (update_departure < departure):
+	critical ->'flight is today! the flight departure time just can be delayed'
+
+elif (weekly_schedule == today | custom_schedule == today.date) & (update_departure > departure):
+	send notification ticket owner the departure time of flight has been changed 
+	status: -> DELAYED
+
+elif (weekly_schedule == today | custom_schedule == today.date) & (update_departure = departure):
+	critical -> update time and departure time are already same
+
+# 2. Flight is not today
+
+if (weekly_schedule =! today & custom_schedule =! today.date) & (update_departure < departure):
+	send notification ticket owner the departure time of flight has been changed 
+	status: -> DELAYED
+
+elif (weekly_schedule =! today & custom_schedule =! today.date) & (update_departure > departure):
+	send notification ticket owner the departure time of flight has been changed 
+	status: -> DELAYED
+
+
+elif (weekly_schedule =! today & custom_schedule =! today.date) & (update_departure = departure):
+	critical -> update time and departure time are already same
+
+
+saat güncellemesi -> clicked resync tables
+
+if weekly_schedule == today & (status == SCHEDULE | status == ACTIVE):
+	status: -> ACTIVE
+	otomatik bir gate atasın (örn: H3)
+
+if departure.hour - time.hour == 0 & (weekly_schedule == today | custom_schedule == today_date)
+	  status: -> GATE OPEN
+	  if statüs == GATE OPEN:
+		gate cannot ve modified anymore
+		flight instance cannot be canceled anymore
+		
+
+if departure.minute - time.minute <= 45 & (status == GATE OPEN | status == BOARDING)
+	status: -> BOARDING
+
+if departure.minute - time.minute <= 20 & (status == GATE OPEN | status == LAST CALL)
+	status: -> LAST CALL
+
+
+if departure.minute - time.minute <= 10 & (status == LAST CALL | status == GATE CLOSED)
+	status: -> GATE CLOSED
+
+if departure.minute - time.minute <= 0 & (status == LAST CALL | status == DEPARTED)
+	status: -> DEPARTED
+
+departure_time = 'AB:CD'
+departure_time = datetime.strptime(departure_time, '%H:%M')
+now : datetime.now()
+
+departure_time = 'AB:CD'
+departure_time = datetime.strptime(departure_time, '%H:%M')
+now : datetime.now()
+time_in_air = timedelta(hours=now.hour, minutes=now.minute) - timedelta(hours=departure_time.hours, minutes=departure_time.minute)
+
+if (time_in_air) >= timedelta(minutes:10)) & (status == DEPARTED | status == IN AIR)
+	status: -> IN AIR
+
+
+if in_air_time == time
+
+
+	

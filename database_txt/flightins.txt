@@ -1,0 +1,9 @@
+Flight Number	Day	Date	Departure	Gate	Status
+22	Friday	-	17:05	C3A	ACTIVE
+22	-	12 January	13:45	-	SCHEDULED
+35	Friday	-	17:40	-	SCHEDULED
+35	Sunday	-	16:45	-	SCHEDULED
+35	Thursday	-	11:25	-	SCHEDULED
+16	-	12 January	00:30	-	SCHEDULED
+16	-	03 January	15:15	-	UNKNOWN
+16	-	04 January	22:00	-	UNKNOWN

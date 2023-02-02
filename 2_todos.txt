@@ -1,0 +1,25 @@
+-datatime modüle kullanımı
+-datatime modüle, 80 dk sonrasını göster vs.
+-saatin win'e yerleştirilmesi
+
+
+-------------------------------
+IST - ADB: 1 saat 10 dk
+IST - ESB: 2 saat
+
+IST - ATH: 1 saat 25 dk
+IST - CPH: 3 saat 30 dk
+--------------------------------
+ADB - ESB: 1 saat 15 dk
+
+ADB - ATH: 1 saat 15 dk
+ADB - CPH: 3 saat 40 dk
+-------------------------------
+
+ESB - ATH: 4 saat 35 dk
+ESB - CPH: 2 saat 25 dk
+
+------------------------------
+ATH - CPH: 2 saat 20 dk
+
+

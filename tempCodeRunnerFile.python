@@ -1,0 +1,18 @@
+# 100 ile 200 arasında
+# bu sayılardan rakamları toplamı asal kaç sayı vardır
+asal_sayi_listesi = []
+
+def find_primes(x):
+    # sayi 1 e ve kendisine bölünebilen sayılar
+    for i in range(1,x):
+        if x%i != 0:
+            i += 1
+        else:
+            None
+    asal_sayi_listesi.append(x)
+
+
+for i in range(100,200):
+    find_primes(i)
+
+print(len(asal_sayi_listesi))

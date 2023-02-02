@@ -1,0 +1,7 @@
+Flight Number	Day of Week	Departure
+16	Monday	22:00
+16	Wednesday	23:00
+22	Friday	17:00
+35	Friday	17:40
+35	Sunday	16:45
+35	Thursday	11:25

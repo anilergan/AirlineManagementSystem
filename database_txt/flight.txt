@@ -1,0 +1,5 @@
+Flight Number	Departure Airport	Arrival Airport	Duration (Hour)	Duration (Minute)	Airport Couple
+16	IST	ESB	2	0	IST-ESB
+22	IST	ATH	1	25	IST-ATH
+33	ATH	ADB	1	15	ATH-ADB
+35	ATH	CPH	2	20	ATH-CPH

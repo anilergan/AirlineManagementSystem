@@ -1,0 +1,10 @@
+Id	Name	Surname	Mail	Phone	Password	Person type	Street	City	State	Zipcode	Country
+2	Yucel	Ergan	yucel2069@hotmail.com		123	Customer					
+3	Anil	Ergan	anergan@hotmail.com		123	Customer					
+7	Admin	Admin	admin	NULL	admin123	Admin	NULL	NULL	NULL	NULL	NULL
+8	Kamran	Yaldız	kyagiz09@gmail.com	05414842961	kamran123	Pilot					
+9	Turan	Kaşgar	kasgar@media.com		kasgar123	Customer					
+10	Turan	Kaşgar	trnksgr@media.com	05476678333	kasgar123	Customer					
+11	George	Pilot	george@pilot.com		123	Pilot					
+12	Osman	Pilot	osman@pilot.com		123	Pilot					
+13	Mike	Pilot	mike@pilot.com		123	Pilot					
