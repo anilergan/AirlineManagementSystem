@@ -73,7 +73,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="Page_welcome">
        <property name="styleSheet">
@@ -274,7 +274,7 @@ outline: transparent;
          <string>*blue bordered fields are required</string>
         </property>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -3549,11 +3549,11 @@ color: rgba(255, 255, 255, 255);
                 <property name="currentIndex">
                  <number>0</number>
                 </property>
-                <property name="placeholderText">
-                 <string>Giriş tipini belirle</string>
-                </property>
                 <property name="frame">
                  <bool>false</bool>
+                </property>
+                <property name="placeholderText" stdset="0">
+                 <string>Giriş tipini belirle</string>
                 </property>
                 <item>
                  <property name="text">
@@ -3831,7 +3831,7 @@ font: 14pt &quot;Verdana&quot;;
          </layout>
         </widget>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>370</x>
@@ -3985,7 +3985,7 @@ background-color:transparent;
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
@@ -4000,7 +4000,7 @@ background-color:transparent;
          <widget class="QPushButton" name="button_flight_cancel">
           <property name="geometry">
            <rect>
-            <x>1050</x>
+            <x>940</x>
             <y>209</y>
             <width>91</width>
             <height>28</height>
@@ -4020,7 +4020,7 @@ border: 3px solid blue;</string>
          <widget class="QPushButton" name="button_flight_add">
           <property name="geometry">
            <rect>
-            <x>1054</x>
+            <x>940</x>
             <y>133</y>
             <width>91</width>
             <height>28</height>
@@ -4097,6 +4097,9 @@ color: white;
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>30</number>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>true</bool>
           </attribute>
           <column>
            <property name="text">
@@ -4190,7 +4193,7 @@ border: 1px solid blue;</string>
            <rect>
             <x>784</x>
             <y>50</y>
-            <width>171</width>
+            <width>101</width>
             <height>31</height>
            </rect>
           </property>
@@ -4221,7 +4224,7 @@ border: 1px solid blue;
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <property name="placeholderText">
+          <property name="placeholderText" stdset="0">
            <string>hehehe</string>
           </property>
           <item>
@@ -4253,9 +4256,9 @@ border: 1px solid blue;
          <widget class="QComboBox" name="combobox_flight_arrival">
           <property name="geometry">
            <rect>
-            <x>974</x>
+            <x>930</x>
             <y>50</y>
-            <width>171</width>
+            <width>101</width>
             <height>31</height>
            </rect>
           </property>
@@ -4309,7 +4312,7 @@ border: 1px solid blue;
          <widget class="QLabel" name="label_show_evaluate_duration_hour">
           <property name="geometry">
            <rect>
-            <x>993</x>
+            <x>905</x>
             <y>90</y>
             <width>25</width>
             <height>30</height>
@@ -4340,7 +4343,7 @@ border: 1px solid transparent;</string>
          <widget class="QLabel" name="label_text_hour">
           <property name="geometry">
            <rect>
-            <x>1018</x>
+            <x>930</x>
             <y>90</y>
             <width>35</width>
             <height>30</height>
@@ -4414,7 +4417,7 @@ border: 1px solid blue;</string>
          <widget class="QLabel" name="text_arrival_airport">
           <property name="geometry">
            <rect>
-            <x>974</x>
+            <x>930</x>
             <y>30</y>
             <width>121</width>
             <height>16</height>
@@ -4564,7 +4567,7 @@ color: white;
          <widget class="QLabel" name="label_show_evaluate_duration_minute">
           <property name="geometry">
            <rect>
-            <x>1063</x>
+            <x>975</x>
             <y>90</y>
             <width>25</width>
             <height>30</height>
@@ -4595,9 +4598,9 @@ border: 1px solid transparent;</string>
          <widget class="QLabel" name="label_text_minute">
           <property name="geometry">
            <rect>
-            <x>1088</x>
+            <x>1000</x>
             <y>90</y>
-            <width>55</width>
+            <width>31</width>
             <height>30</height>
            </rect>
           </property>
@@ -4617,7 +4620,7 @@ background-color: rgb(206, 208, 238,150);
 border: 1px solid transparent;</string>
           </property>
           <property name="text">
-           <string>minutes</string>
+           <string>min</string>
           </property>
          </widget>
          <widget class="QPushButton" name="button_cal_duration">
@@ -4625,7 +4628,7 @@ border: 1px solid transparent;</string>
            <rect>
             <x>784</x>
             <y>90</y>
-            <width>151</width>
+            <width>111</width>
             <height>31</height>
            </rect>
           </property>
@@ -4837,7 +4840,7 @@ border: 1px solid green</string>
          <widget class="QPushButton" name="button_get_schedule">
           <property name="geometry">
            <rect>
-            <x>910</x>
+            <x>900</x>
             <y>280</y>
             <width>101</width>
             <height>28</height>
@@ -5014,9 +5017,9 @@ border: 3px solid red</string>
          <widget class="QPushButton" name="button_cancel_schedule_w">
           <property name="geometry">
            <rect>
-            <x>1020</x>
-            <y>280</y>
-            <width>121</width>
+            <x>785</x>
+            <y>315</y>
+            <width>111</width>
             <height>28</height>
            </rect>
           </property>
@@ -5040,7 +5043,7 @@ border: 3px solid red</string>
 border: 3px solid green</string>
           </property>
           <property name="text">
-           <string>Cancel Weekly Sc.</string>
+           <string>Cancel Weekly</string>
           </property>
          </widget>
          <widget class="QLabel" name="text_info_schedule">
@@ -5114,9 +5117,9 @@ border: 3px solid red</string>
          <widget class="QPushButton" name="button_cancel_schedule_c">
           <property name="geometry">
            <rect>
-            <x>1020</x>
+            <x>900</x>
             <y>315</y>
-            <width>121</width>
+            <width>101</width>
             <height>28</height>
            </rect>
           </property>
@@ -5140,7 +5143,71 @@ border: 3px solid red</string>
 border: 3px solid green</string>
           </property>
           <property name="text">
-           <string>Cancel Custom Sc.</string>
+           <string>Cancel Custom</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="button_past_flights">
+          <property name="geometry">
+           <rect>
+            <x>123</x>
+            <y>359</y>
+            <width>91</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>91</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>91</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 0, 0,40);
+border: 3px solid red</string>
+          </property>
+          <property name="text">
+           <string>Past Flights</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="button_current_flights">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>359</y>
+            <width>110</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>110</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>110</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 0, 0,40);
+border: 3px solid red</string>
+          </property>
+          <property name="text">
+           <string>Current Flights</string>
           </property>
          </widget>
         </widget>
@@ -5764,8 +5831,82 @@ border: 3px solid orange;</string>
         <string notr="true">#Page_customer
 {
 	border-image: url(:/bg/passenger_cover.jpg);
+}
+
+QFrame{
+	background-color: rgb(200,200,200,100)
 }</string>
        </property>
+       <widget class="QFrame" name="frame">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>281</width>
+          <height>481</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QPushButton" name="pushButton">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>20</y>
+           <width>231</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Search Flights / Create Itinerary</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>60</y>
+           <width>231</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>My Itineraries</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>520</y>
+          <width>281</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="QStackedWidget" name="stackedWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>20</y>
+          <width>861</width>
+          <height>711</height>
+         </rect>
+        </property>
+        <widget class="QWidget" name="page"/>
+        <widget class="QWidget" name="page_2"/>
+       </widget>
       </widget>
       <widget class="QWidget" name="Page_pilot">
        <property name="styleSheet">
@@ -6007,8 +6148,8 @@ outline: 0xp;
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>../../Belgeler/ams_images/logout.png</normaloff>../../Belgeler/ams_images/logout.png</iconset>
+            <iconset resource="../../../Belgeler/ams_images/images.qrc">
+             <normaloff>:/icons/logout.png</normaloff>:/icons/logout.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6027,7 +6168,7 @@ outline: 0xp;
   </widget>
  </widget>
  <resources>
-  <include location="../../Belgeler/ams_images/images.qrc"/>
+  <include location="../../../Belgeler/ams_images/images.qrc"/>
  </resources>
  <connections/>
 </ui>

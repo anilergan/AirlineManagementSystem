@@ -116,7 +116,7 @@ class AddScheduleWindow(QWidget):
 
 
         self.gate = '-'
-        self.status = 'UNKNOWN'
+        self.status = 'SCHEDULED'
         self.aircraft = '-'
         self.newInstance = FlightInstance(self.newWeeklySchedule.get_departure_time(), self.gate, self.status, self.aircraft) 
         self.customschedule = '-'
@@ -184,10 +184,6 @@ class AddScheduleWindow(QWidget):
         
         self.flight_number = int(self.flight_number)
 
-
-
-
-
  
         # self.database = pd.read_sql('flightinstance', self.engine)
         self.database = pd.read_excel('ams_database.xlsx', sheet_name='Flight Instance')
@@ -253,6 +249,8 @@ class AddScheduleWindow(QWidget):
         self.update_time_dt = datetime.strptime(self.update_dep, '%H:%M')
 
         self.list_inputs = [self.flight_number, self.daydate, self.gate, self.departure_time, self.update_dep]
+
+
         for check in self.list_inputs:
             self.check_space = check.isspace()
             self.check_null = check == ''
@@ -275,12 +273,12 @@ class AddScheduleWindow(QWidget):
         self.dbS = self.dbS.reset_index(drop=True)
 
         if self.dbS.loc[0,'Status'] == 'CANCEL':
-            QMessageBox.critical(self,'Flight instance was cancaled', 'The flight instance you are trying to update was already canceled')
+            QMessageBox.critical(self,'Flight instance was cancaled', 'The flight instance you are trying to update was canceled')
             return None
         
-        self.status_block_list = ['GATE OPEN', 'BOARDING', 'LAST CALL', 'IN AIR', 'ARRIVED']
+        self.status_block_list = ['CHECK-IN','GATE OPEN', 'BOARDING', 'LAST CALL', 'IN AIR', 'ARRIVED']
         if self.db_check_status['Status'] in self.status_block_list:
-            QMessageBox.critical(self,"Flight Status Block", "The Flight's status is not appropriate for modifying")
+            QMessageBox.critical(self,"Flight Status Blocked", "The Flight's status is not appropriate for modifying")
             return None 
 
         self.check_delay = self.departure_time_dt < self.update_time_dt #If True => Delay
@@ -288,20 +286,23 @@ class AddScheduleWindow(QWidget):
             QMessageBox.critical(self,"Flight Status Block", "The Flight's status is not appropriate to update departure time earlier")
             return None 
 
-        elif (self.db_check_status['Status'] != 'ACTIVE') & (self.check_delay) == False:
-             self.dbS.loc[0,'Status'] = 'SCHEDULED'
-             QMessageBox.information(self,"Scheduled Succeed", f"The Flight's departure time is scheduled succeed")    
-        
-        elif self.check_delay:
+        elif (self.db_check_status['Status'] == 'ACTIVE') & self.check_delay:
              self.dbS.loc[0,'Status'] = 'DELAYED'
              QMessageBox.information(self,"Delayed Succeed", f"The Flight's departure time is delayed succeed")
+             #bilet sahiplerine bildirim gönder
+
+        elif (self.db_check_status['Status'] != 'ACTIVE') & (self.check_delay) == False:
+             QMessageBox.information(self,"Scheduled Succeed", f"The Flight's departure time is rescheduled succeed")    
+             #bilet sahiplerine bildirim gönder!
+        
                      
         elif (self.db_check_status['Status'] != 'ACTIVE') & (self.departure_time_dt == self.update_time_dt) :
-             self.dbS.loc[0,'Status'] = 'SCHEDULED'
              QMessageBox.information(self,"Scheduled Succeed", f"The Flight's departure time is scheduled succeed") 
+             #bilet sahiplerine bildirim gönder!
+
 
         elif (self.db_check_status['Status'] == 'ACTIVE') & (self.departure_time_dt == self.update_time_dt) :
-             QMessageBox.critical(self,"Update Time Error", f"Update time and current time are the same")
+             QMessageBox.critical(self,"Update Time Error", f"Update time and current time are the same\n Flight's status is 'ACTIVE', flight's departure time can not be changed but only can be delayed")
              return None         
 
             
@@ -371,7 +372,6 @@ class AddScheduleWindow(QWidget):
         # Check: spesifik olarak bu kayıt mecvut mu
         # self.db_custom = pd.read_sql('customschedule', self.engine)
         self.db_custom = pd.read_excel('ams_database.xlsx', sheet_name='Custom Schedule')
-        print(self.db_custom)
         check_fn2 = ((self.db_custom['Flight Number'] == self.flight_number) & (self.db_custom['Date'] == self.day) & (self.db_custom['Departure'] == self.departure)).any()
         if check_fn2 == True:
             QMessageBox.critical(self, 'Schedule is already exist','This specific weekly schedule that you try to create is already exist for this flight number.\nPlease, change duration time or day of week and try again.')
@@ -441,7 +441,7 @@ class AddScheduleWindow(QWidget):
         
         
         self.gate = '-'
-        self.status = 'UNKNOWN'
+        self.status = 'SCHEDULED'
         self.aircraft = '-'
         self.weeklyschedule = '-'
         self.newInstance = FlightInstance(self.newCustomSchedule.get_departure_time(), self.gate, self.status, self.aircraft) 

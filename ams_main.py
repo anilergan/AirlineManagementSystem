@@ -40,6 +40,7 @@ class AppWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+
         #Manuel QT Tasarım Ayarlamalar
         self.ui.combobox_person_type.view().window().setWindowFlags(Qt.Popup | Qt.FramelessWindowHint | Qt.NoDropShadowWindowHint)
         self.ui.combobox_person_type.view().window().setAttribute(Qt.WA_TranslucentBackground)
@@ -86,6 +87,10 @@ class AppWindow(QMainWindow):
         self.ui.button_get_instance.clicked.connect(self.reach_get_flight_instances) #4.4
         self.ui.button_cancel_instance.clicked.connect(self.reach_cancel_flight_instances) #4.4
         self.ui.button_resync_tables.clicked.connect(self.reach_return_db)
+
+
+        self.ui.button_current_flights.clicked.connect(self.reach_current_flight_instances)
+        self.ui.button_past_flights.clicked.connect(self.reach_past_flight_instances)
         
         #aircraft tab buttons
         self.ui.aircraft_button_add.clicked.connect(self.reach_add_aircraft)
@@ -117,11 +122,6 @@ class AppWindow(QMainWindow):
         self.pilot_surname = self.db_pilot.iloc[0,1]
         self.pilot_name = self.pilot_name + ' ' + self.pilot_surname
         self.ui.pilot_name.setText(self.pilot_name)
-
-
-
-
-
 
 
 
@@ -293,6 +293,13 @@ class AppWindow(QMainWindow):
             self.ui.input_instance_flight_number.text()
         )
     
+    def reach_current_flight_instances(self):
+        self.newAdmin = Admin()
+        self.db = self.newAdmin.current_flight
+ 
+
+    def reach_past_flight_instances(self):
+        pass
     
     def reach_get_flight_instances(self):
         self.newAdmin = Admin()
@@ -341,6 +348,9 @@ class AppWindow(QMainWindow):
         self.a_db = self.newAdmin.return_aircraft_db()
         self.i_db = self.newAdmin.return_instance_db()
         self.p_db = self.newAdmin.return_pilotassign_db()
+
+        #do not show flight instances with flight status 'PAST'
+        # self.i_db = self.i_db[self.i_db['Status'] != 'PAST']
 
         #flight table bastır
         self.ui.table_flight.setRowCount(len(self.f_db))

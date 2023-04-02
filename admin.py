@@ -683,7 +683,9 @@ class Admin(QWidget):
         else: 
             QMessageBox.information(self, 'Recall about canceling process','If you cancel a flight with a status of CANCEL again, it will be permanently removed from the table.')
              
-    
+    def current_flight_instances(self):
+        # self.
+        pass
 
     def get_flight_instances(self,fn):
         self.list_inputs = [fn]
@@ -732,13 +734,17 @@ class Admin(QWidget):
             
             self.df_serie = pd.Series(self.df_serie)
             self.update_serie = self.update_status(self.df_serie, self.duration_serie)
+            print('update_serie: ')
+            print(self.update_serie)
             i_db.iloc[row,:] = self.update_serie
-        
+
+        # çoktan bozuldu
         return self.i_db
         
 
 
     def update_status(self, serie, duration_serie):
+
         #serie datas
         self.serie = serie
         self.num = self.serie['Flight Number']
@@ -747,80 +753,192 @@ class Admin(QWidget):
         self.gate = self.serie['Gate']
         self.dep = self.serie['Departure']
         self.status = self.serie['Status']
+
+        print('self.serie başalngıç: ')
+        print(self.serie)
+
         #duration datas
         self.duration_serie = duration_serie
         self.dur_hour = self.duration_serie['Duration (Hour)']
         self.dur_min = self.duration_serie['Duration (Minute)']
 
+        #strftime = time -> str
+        #strptime = str -> time     
+
         #time datas
         self.now = datetime.now()
+
+        #day 
         self.now_day = self.now.strftime('%A')
-        self.now_date = self.now.strftime('%d %B')
 
-        self.dur_hour = datetime.strptime(str(self.dur_hour), '%H')
-        self.dur_min = datetime.strptime(str(self.dur_min), '%M')
-        self.dep = datetime.strptime(str(self.dep), '%H:%M')
+        #date 
+        self.now_date = self.now.strftime(r'%d %B')
 
+        #duration time -> exp: 1 hours 15 minutes
 
+        self.duration_text = (str(self.dur_hour) + ' hours ' + str(self.dur_min) + ' minutes')
+        self.dur = datetime.strptime(self.duration_text, '%H hours %M minutes')
 
-        self.now_time_delta = timedelta(hours=self.now.hour, minutes=self.now.minute)
-        self.dep_time_delta = timedelta(hours=self.dep.hour, minutes= self.dep.minute)
-        self.time_to_flight = self.dep_time_delta - self.now_time_delta
-        self.time_in_air = self.now_time_delta - self.dep_time_delta
-
-
-        self.duration_delta = timedelta(hours=self.dur_hour.hour, minutes=self.dur_min.minute)
         
-        self.check_flight_date_day = ((self.day == self.now_day) | (self.date == self.now_date))
+        #FOR NOW, CURRENT YEAR IS 2023, next version it will be uploaded
 
-        #update the status of flight
-        if (self.check_flight_date_day) & ((self.status == 'UNKNOWN')):
+        #custom -> exp: 16:00, 23 January 
+        if self.date != '-': 
+            self.dep_for_custom_text = str(self.dep) + ', ' + str(self.date) + ' 2023' 
+            self.dep_for_custom = datetime.strptime(self.dep_for_custom_text, r'%H:%M, %d %B %Y')
+
+            self.flight_current_status = self.update_status_custom_function(self.dep_for_custom, self.now, self.dur)
+
+        
+        elif self.day != '-':
+            self.date_of_weekly_schedule = self.update_status_weekkly_function(self.day, self.now)
+            
+            self.flight_current_status = self.update_status_custom_function(self.date_of_weekly_schedule, self.now, self.dur)
+        
+
+        if self.flight_current_status == 'LANDED':
+            self.dur_delta = timedelta(hours = self.dur.hour, minutes = self.dur.minute)
+            self.time_after_landed = self.now - (self.dur_delta + self.dep_for_custom)
+            self.flight_is_landed(self.time_after_landed)
+        
+        elif self.flight_current_status == 'DEPARTED':
+            self.time_after_departed = self.now - self.dep_for_custom 
+            self.flight_is_departed(self.time_after_departed)
+        
+        else:
+            print('MERHABA BENİM ÇALIŞMIŞ OLMAM LAZIM! ')
+            self.time_to_flight = self.flight_current_status
+            self.flight_is_scheduled(self.time_to_flight)
+
+
+        return self.serie
+
+
+    def flight_is_scheduled(self, time):
+
+        if (time < timedelta(days = 1)) and (self.status == 'SCHEDULED'):
             self.status = 'ACTIVE'
             self.gate = self.random_gate()
-        
-        if (self.check_flight_date_day) & ((self.status == 'SCHEDULED')):
-            self.status = 'ACTIVE'
-        
-        if (self.time_to_flight.seconds < 60*60+15*60) & (self.status == 'ACTIVE') :
-            self.status = 'GATE OPEN'
 
+        elif (time < timedelta(days = 1)) and (self.status == 'SCHEDULED'):
+            self.status = 'ACTIVE'
+
+        elif (time < timedelta(hours = 2)) and (self.status == 'ACTIVE'):
+            self.status = 'CHECK-IN'
+
+        elif (time < timedelta(hours = 1)) and (self.status == 'CHECK-IN'):
+            self.status = 'GATE OPEN'
         
-        if (self.time_to_flight.seconds < 45*60) & (self.status == 'GATE OPEN'):
+        elif (time < timedelta(minutes = 40)) and (self.status == 'GATE-OPEN'):
             self.status = 'BOARDING'
-            
         
-        if (self.time_to_flight.seconds < 20*60) & (self.status == 'BOARDING'):
+        elif (time < timedelta(minutes = 15)) and (self.status == 'BOARDING'):
             self.status = 'LAST CALL'
         
-        if (self.time_to_flight.seconds < 10*60) & (self.status == 'LAST CALL'):
+        elif (time < timedelta(minutes = 5)) and (self.status == 'LAST CALL'):
             self.status = 'GATE CLOSED'
-       
-        if (self.time_in_air.seconds > 0) & (self.status == 'GATE CLOSED'):
+
+
+    def flight_is_departed(self, time):
+        if time < timedelta(minutes = 10):
             self.status = 'DEPARTED'
-        
-        if (self.time_in_air.seconds > 10*60) & (self.status == 'DEPARTED'):
+        else:
             self.status = 'IN AIR'
 
-        if (self.time_in_air.seconds >= self.duration_delta.seconds) & (self.status == 'IN AIR'):
+    def flight_is_landed(self, time):
+        if time < timedelta(hours = 2):
             self.status = 'LANDED'
-       
-        if (self.time_in_air.seconds >= (self.duration_delta.seconds + 10*60)) & (self.status == 'LANDED'):
+        elif time < timedelta(hours = 12):
             self.status = 'ARRIVED'
         
-        if (self.time_in_air.seconds >= (self.duration_delta.seconds + 2*60*60)) & (self.status == 'ARRIVED'):
-            self.status = 'UNKNOWN'
+        if (time >= timedelta(hours = 12)) and (self.date != '-'):
+            self.status = 'PAST'
         
+        elif (time>= timedelta(hours = 12)) and (self.day != '-'):
+            self.status = 'SCHEDULED'
 
         self.serie['Flight Number'] = self.num
         self.serie['Day'] = self.day
         self.serie['Date'] = self.date
         self.serie['Gate'] = self.gate
-        self.dep = self.dep.strftime('%H:%M')
         self.serie['Departure'] = self.dep
         self.serie['Status'] = self.status
 
+        print('seriemiz:', self.serie)
         return self.serie
-    
+
+
+    def update_status_custom_function(self, dep, now, dur):
+        self.dur_delta = timedelta(hours = dur.hour, minutes = dur.minute)
+        print('update status custom function\n')
+        print('şuan: ',now)
+        print('uçuş iniş saat tarih: ',dep + self.dur_delta)
+
+        #flight is landed
+        if (now >= (dep + self.dur_delta)):
+            print('\nlanded oldu\n')
+            return 'LANDED'
+        
+        elif (now < (dep + self.dur_delta)) and (now >= dep):
+            print('\ndeparted oldu\n')
+            return 'DEPARTED'
+        
+        elif (now < (dep + self.dur_delta)) and (now < dep):
+            print('\nuşuşa daha var:\n', (dep - now), '\n')
+            return (dep - now)
+
+    def update_status_weekly_function (self, day, now):
+        
+        if day == 'Monday':
+            mon_orign = '02/01/2023'
+            mon_orign_strp = datetime.strptime(mon_orign, r'%m/%d/%Y')
+            while mon_orign_strp < now:
+                mon_orign_strp += timedelta(days = 7)
+            return mon_orign_strp
+
+        elif day == 'Tuesday':
+            tue_orign = '03/01/2023'
+            tue_orign_strp = datetime.strptime(tue_orign, r'%m/%d/%Y')
+            while tue_orign_strp < now:
+                tue_orign_strp += timedelta(days = 7)
+            return tue_orign_strp
+
+        elif day == 'Wednesday':
+            wed_orign = '04/01/2023'
+            wed_orign_strp = datetime.strptime(wed_orign, r'%m/%d/%Y')
+            while wed_orign_strp < now:
+                wed_orign_strp += timedelta(days = 7)
+            return wed_orign_strp
+
+        elif day == 'Thursday':
+            thu_orign = '05/01/2023'
+            thu_orign_strp = datetime.strptime(thu_orign, r'%m/%d/%Y')
+            while thu_orign_strp < now:
+                thu_orign_strp += timedelta(days = 7)
+            return thu_orign_strp
+
+        elif day == 'Friday':
+            fri_orign = '06/01/2023'
+            fri_orign_strp = datetime.strptime(fri_orign, r'%m/%d/%Y')
+            while fri_orign_strp < now:
+                fri_orign_strp += timedelta(days = 7)
+            return fri_orign_strp
+
+        elif day == 'Saturday':
+            sat_orign = '07/01/2023'
+            sat_orign_strp = datetime.strptime(sat_orign, r'%m/%d/%Y')
+            while sat_orign_strp < now:
+                sat_orign_strp += timedelta(days = 7)
+            return sat_orign_strp
+
+        elif day == 'Sunday':
+            sun_orign = '08/01/2023'
+            sun_orign_strp = datetime.strptime(sun_orign, r'%m/%d/%Y')
+            while sun_orign_strp < now:
+                sun_orign_strp += timedelta(days = 7)
+            return sun_orign_strp
+
+
 
     def random_gate(self):
 
